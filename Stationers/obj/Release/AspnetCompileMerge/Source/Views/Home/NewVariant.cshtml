@@ -1,0 +1,56 @@
+﻿@model Stationers.Models.Variant
+
+@{
+    ViewBag.Title = "NewVariant";
+}
+
+<h4>
+    Add New Stock
+</h4>
+    @using (Html.BeginForm("NewVariant", "Home", FormMethod.Post))
+    {
+@Html.AntiForgeryToken()
+
+<hr />
+@Html.HiddenFor(model => Model.Stationary_ID)
+
+<div class="form-group">
+    @Html.LabelFor(model => Model.Colour, htmlAttributes: new { @class = "control-label col-md-2" })
+    @Html.EditorFor(model => Model.Colour, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessageFor(model => Model.Colour, "", new { @class = "text-danger" })
+
+
+</div>
+
+    <div>
+        <div class="form-group">
+            @Html.LabelFor(model => Model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => Model.Status, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => Model.Status, "", new { @class = "text-danger" })
+
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => Model.Stocked, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.CheckBoxFor(model => Model.Stocked, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => Model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => Model.Amount, new { htmlAttributes = new { @class = "form-control", min = "1", Value = "1" } })
+            @Html.ValidationMessageFor(model => Model.Amount, "", new { @class = "text-danger" })
+        </div>
+
+
+
+        <table class="table"></table>
+        <div class="form-group">
+            <div value="Create" class="btn btn-default">
+                <input type="submit" value="Create" />
+            </div>
+
+    </div>
+    <div>
+        @Html.ActionLink("Back to main list", "Index")
+    </div>
+</div>  }

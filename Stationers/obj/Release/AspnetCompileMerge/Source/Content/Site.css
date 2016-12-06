@@ -1,0 +1,44 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+        min-width: 280px;
+}
+
+
+textarea {
+        min-height: 180px;
+}
+
+.picturedisplay {
+    max-width: 120px;
+}
+
+
+#newVariant_Stationary_ID {
+display:none}
+
+
+._Art {
+    background-color: #f2ddf2;
+}
+
+._General {
+    background-color: #e8f2e7;
+}
+
+._Math {
+    background-color: #e3e2f3;
+}

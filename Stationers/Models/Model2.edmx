@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MVCStationaryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Stationary">
+          <Key>
+            <PropertyRef Name="Stationary_ID" />
+          </Key>
+          <Property Name="Stationary_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Image" Type="varchar(max)" />
+          <Property Name="ForSubject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Favorite" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Variant">
+          <Key>
+            <PropertyRef Name="Variant_ID" />
+          </Key>
+          <Property Name="Variant_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Colour" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Stocked" Type="bit" Nullable="false" />
+          <Property Name="Stationary_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Variant__Station__38996AB5">
+          <End Role="Stationary" Type="Self.Stationary" Multiplicity="1" />
+          <End Role="Variant" Type="Self.Variant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stationary">
+              <PropertyRef Name="Stationary_ID" />
+            </Principal>
+            <Dependent Role="Variant">
+              <PropertyRef Name="Stationary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCStationaryModelStoreContainer">
+          <EntitySet Name="Stationary" EntityType="Self.Stationary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Variant" EntityType="Self.Variant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Variant__Station__38996AB5" Association="Self.FK__Variant__Station__38996AB5">
+            <End Role="Stationary" EntitySet="Stationary" />
+            <End Role="Variant" EntitySet="Variant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCStationaryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Stationary">
+          <Key>
+            <PropertyRef Name="Stationary_ID" />
+          </Key>
+          <Property Name="Stationary_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ForSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Favorite" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Variants" Relationship="Self.FK__Variant__Station__38996AB5" FromRole="Stationary" ToRole="Variant" />
+        </EntityType>
+        <EntityType Name="Variant">
+          <Key>
+            <PropertyRef Name="Variant_ID" />
+          </Key>
+          <Property Name="Variant_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Colour" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Stocked" Type="Boolean" Nullable="false" />
+          <Property Name="Stationary_ID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Stationary" Relationship="Self.FK__Variant__Station__38996AB5" FromRole="Variant" ToRole="Stationary" />
+        </EntityType>
+        <Association Name="FK__Variant__Station__38996AB5">
+          <End Role="Stationary" Type="Self.Stationary" Multiplicity="1" />
+          <End Role="Variant" Type="Self.Variant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stationary">
+              <PropertyRef Name="Stationary_ID" />
+            </Principal>
+            <Dependent Role="Variant">
+              <PropertyRef Name="Stationary_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCStationaryEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Stationaries" EntityType="Self.Stationary" />
+          <EntitySet Name="Variants" EntityType="Self.Variant" />
+          <AssociationSet Name="FK__Variant__Station__38996AB5" Association="Self.FK__Variant__Station__38996AB5">
+            <End Role="Stationary" EntitySet="Stationaries" />
+            <End Role="Variant" EntitySet="Variants" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCStationaryModelStoreContainer" CdmEntityContainer="MVCStationaryEntities1">
+          <EntitySetMapping Name="Stationaries">
+            <EntityTypeMapping TypeName="MVCStationaryModel.Stationary">
+              <MappingFragment StoreEntitySet="Stationary">
+                <ScalarProperty Name="Stationary_ID" ColumnName="Stationary_ID" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ForSubject" ColumnName="ForSubject" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Variants">
+            <EntityTypeMapping TypeName="MVCStationaryModel.Variant">
+              <MappingFragment StoreEntitySet="Variant">
+                <ScalarProperty Name="Variant_ID" ColumnName="Variant_ID" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Stocked" ColumnName="Stocked" />
+                <ScalarProperty Name="Stationary_ID" ColumnName="Stationary_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

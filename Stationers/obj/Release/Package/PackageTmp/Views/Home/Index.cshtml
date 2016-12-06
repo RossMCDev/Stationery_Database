@@ -1,0 +1,180 @@
+﻿@model IEnumerable<Stationers.Models.Stationary>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+    <p>
+        @Html.ActionLink("Create New Record", "Create")
+        @using (Html.BeginForm())
+        {
+        <p>
+            Category: @Html.DropDownList("stationeryCategory", "All")
+            &nbsp; 
+            Name: <input id="searchString" name="searchString" type="text" class="form-control" style="display:initial; max-width: 280px;">
+            &nbsp;
+            <input type="submit" value="Filter" class="btn" />
+        </p>
+
+        }
+<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#stocked">Toggle Stocked</button>
+<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#notstocked">Toggle Not Stocked</button>
+
+<div id="stocked" class="collapse in">
+
+    <h2>Stocked</h2>
+
+    <table class="table">
+        <tr>
+            <th class="picturerow">
+                Picture
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Amount
+            </th>
+            <th>
+                Colours
+            </th>
+        </tr>
+
+        @foreach (var subject in Stationers.Models.Stationary.SubjectList)
+        {
+            foreach (var item in Model.Where(x => x.ForSubject == subject.Text))
+            {
+                if (item.Variants.Any(x => x.Stocked == true))
+                {
+
+
+                    <tr class="_@Html.DisplayFor(modelItem => item.ForSubject)">
+                        <td class="picturerow">
+                            <img src="@Html.DisplayFor(modelItem => item.Image)" alt="" class="picturedisplay" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Amount)
+                        </td>
+                        <td>
+                            @foreach (var variant in item.Variants.Where(x => x.Stocked).GroupBy(x => x.ColourDisplay))
+                            {
+                                <i class="fa fa-2x fa-square _@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" data-toggle="tooltip"
+                                   title="@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" style="color: @Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)"></i>
+                            }
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Add Stock", "NewVariant", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Display", "Display", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Detele", "Delete", new { id = item.Stationary_ID })
+
+                        </td>
+                    </tr>
+
+                }
+            }
+        }
+    </table>
+    </div>
+    <br>
+<div id="notstocked" class="collapse in">
+
+    <h2>Not Stocked</h2>
+
+    <table class="table">
+        <tr>
+            <th class="picturerow">
+                Picture
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+                Colours
+            </th>
+        </tr>
+
+        @foreach (var subject in Stationers.Models.Stationary.SubjectList)
+        {
+            foreach (var item in Model.Where(x => x.ForSubject == subject.Text))
+            {
+                if (item.Variants.Any(x => x.Stocked != true))
+                {
+
+
+                    <tr class="_@Html.DisplayFor(modelItem => item.ForSubject)">
+                        <td class="picturerow">
+                            <img src="@Html.DisplayFor(modelItem => item.Image)" alt="" class="picturedisplay" />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category)
+                        </td>
+                        <td>
+                            @if (item.Price > 0)
+                            {
+
+                                <dd>
+
+                                    @Html.DisplayFor(modelItem => item.Price)
+
+                                </dd>
+                            }
+                            else if (item.Price == 0)
+                            {
+                                <dd>
+
+                                    Free
+                                </dd>
+                            }
+                            else
+                            {
+                                <dd>
+
+                                    Unknown
+                                </dd>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var variant in item.Variants.Where(x => !x.Stocked).GroupBy(x => x.ColourDisplay))
+                            {
+                                <i class="fa fa-2x fa-square _@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" data-toggle="tooltip"
+                                   title="@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" style="color: @Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)"></i>
+                            }
+                        </td>
+
+                        <td>
+                            @Html.ActionLink("Add Stock", "NewVariant", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Display", "Display", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Stationary_ID }) <br /><br />
+                            @Html.ActionLink("Detele", "Delete", new { id = item.Stationary_ID })
+
+                        </td>
+                    </tr>
+
+                }
+            }
+        }
+    </table>
+    </div>

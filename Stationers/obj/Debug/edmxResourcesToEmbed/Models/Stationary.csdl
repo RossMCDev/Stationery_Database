@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCStationaryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Stationary">
+    <Key>
+      <PropertyRef Name="Stationary_ID" />
+    </Key>
+    <Property Name="Stationary_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ForSubject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Favorite" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Variants" Relationship="Self.FK__Variant__Station__38996AB5" FromRole="Stationary" ToRole="Variant" />
+  </EntityType>
+  <EntityType Name="Variant">
+    <Key>
+      <PropertyRef Name="Variant_ID" />
+    </Key>
+    <Property Name="Variant_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Colour" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Stocked" Type="Boolean" Nullable="false" />
+    <Property Name="Stationary_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Stationary" Relationship="Self.FK__Variant__Station__38996AB5" FromRole="Variant" ToRole="Stationary" />
+  </EntityType>
+  <Association Name="FK__Variant__Station__38996AB5">
+    <End Role="Stationary" Type="Self.Stationary" Multiplicity="1" />
+    <End Role="Variant" Type="Self.Variant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stationary">
+        <PropertyRef Name="Stationary_ID" />
+      </Principal>
+      <Dependent Role="Variant">
+        <PropertyRef Name="Stationary_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCStationaryEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Stationaries" EntityType="Self.Stationary" />
+    <EntitySet Name="Variants" EntityType="Self.Variant" />
+    <AssociationSet Name="FK__Variant__Station__38996AB5" Association="Self.FK__Variant__Station__38996AB5">
+      <End Role="Stationary" EntitySet="Stationaries" />
+      <End Role="Variant" EntitySet="Variants" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

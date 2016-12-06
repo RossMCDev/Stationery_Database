@@ -1,0 +1,145 @@
+﻿@model IEnumerable<Stationers.Models.Stationary>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @using (Html.BeginForm())
+    {
+    <p>
+        Category: @Html.DropDownList("stationaryCategory", "All")
+        Name: @Html.TextBox("searchString")
+        <input type="submit" value="Filter" />
+    </p>
+
+    }
+    <table class="table">
+    <tr>
+        <th>
+            Picture
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Colours
+        </th>
+    </tr>
+
+
+    @foreach (var subject in Stationers.Models.Stationary.SubjectList)
+    {
+        foreach (var item in Model.Where(x => x.ForSubject == subject.Text))
+        {
+            if (item.Variants.Any(x => x.Stocked == true))
+            {
+
+
+                <tr class="_@Html.DisplayFor(modelItem => item.ForSubject)">
+                    <td>
+                        <img src="http://localhost:55825/@Html.DisplayFor(modelItem => item.Image)" alt="" class="picturedisplay" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td @*style="background-color: white;"*@>
+                        @foreach (var variant in item.Variants.Where(x => x.Stocked).GroupBy(x => x.Colour))
+                        {
+                         <i class="fa fa-2x fa-square _@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" data-toggle="tooltip" 
+                           title="@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" style="color: @Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)"></i>
+                        }   
+                    </td>
+
+                    <td @*style="background-color: white;"*@>
+                        @Html.ActionLink("Add New", "NewVariant", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("EditRecord", "Edit", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("Display record", "Display", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("Detele record", "Delete", new { id = item.Stationary_ID })
+
+                    </td>
+                </tr>
+
+            }
+        }
+    }
+</table> 
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            Picture
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category)
+        </th>
+        <th>
+            Price
+        </th>
+        <th>
+            Colours
+        </th>
+    </tr>
+
+    @foreach (var subject in Stationers.Models.Stationary.SubjectList)
+    {
+        foreach (var item in Model.Where(x => x.ForSubject == subject.Text))
+        {
+            if (item.Variants.Any(x => x.Stocked != true))
+            {
+
+
+                <tr class="_@Html.DisplayFor(modelItem => item.ForSubject)">
+                    <td>
+                        <img src="http://localhost:55825/@Html.DisplayFor(modelItem => item.Image)" alt="" class="picturedisplay" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td @*style="background-color: white;"*@>
+                        @foreach (var variant in item.Variants.Where(x => !x.Stocked))
+                        {
+                            <i class="fa fa-2x fa-square _@Html.DisplayFor(modelItem => variant.Colour)" data-toggle="tooltip" title="@Html.DisplayFor(modelItem => variant.Colour)" style="color: @Html.DisplayFor(modelItem => variant.Colour)"></i>
+                        }
+                    </td>
+
+                    <td @*style="background-color: white;"*@>
+                        @Html.ActionLink("Add New", "NewVariant", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("EditRecord", "Edit", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("Display record", "Display", new { id = item.Stationary_ID }) <br /><br />
+                        @Html.ActionLink("Detele record", "Delete", new { id = item.Stationary_ID })
+
+                    </td>
+                </tr>
+
+            }
+        }
+    }
+</table>

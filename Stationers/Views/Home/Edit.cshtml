@@ -1,0 +1,130 @@
+﻿@model Stationers.Models.Stationary
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+<h2>Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+
+
+        @Html.HiddenFor(model => model.Stationary_ID)
+
+        <div class="form-horizontal">
+            <h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            </h4>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Category, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2">Subject</label>
+                @Html.DropDownListFor(model => model.ForSubject, Stationers.Models.Stationary.SubjectList, htmlAttributes: new { @class = "form-control" })
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+        <br>
+        <h3>
+            Stock
+        </h3>
+        <div class="form-horizontal">
+
+            <table class="table _@Html.DisplayFor(model => model.ForSubject)">
+
+                <tr>
+                    <td>
+                        <b> Colour</b>
+
+                    </td>
+                    <td class="checklabel">
+
+                        <b>In Stock </b>
+
+                    </td>
+                    <td>
+                        <b>Condition </b>
+
+                    </td>
+                    <td class="checklabel">
+                        <b>Delete </b>
+                    </td>
+                </tr>
+
+                @for (var i = 0; i < Model.Variants.Count; i++)
+                {
+                    @Html.HiddenFor(model => Model.Variants[i].Stationary_ID)
+                    @Html.HiddenFor(model => Model.Variants[i].Variant_ID)
+                    @Html.HiddenFor(model => Model.Variants[i].Amount)
+
+
+                    <tr>
+                        <td>
+                            @Html.EditorFor(modelItem => Model.Variants[i].Colour, new { htmlAttributes = new { @class = "form-control edit" } })
+                            @Html.ValidationMessageFor(modelItem => Model.Variants[i].Colour, "", new { @class = "text-danger" })
+
+
+                        </td>
+                        <td>
+
+                            @Html.EditorFor(model => Model.Variants[i].Stocked, new { htmlAttributes = new { @class = "form-control edit" } })
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => Model.Variants[i].Status, new { htmlAttributes = new { @class = "form-control edit" } })
+                            @Html.ValidationMessageFor(modelItem => Model.Variants[i].Status, "", new { @class = "text-danger" })
+
+
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => Model.Variants[i].markedfordeletion, new { htmlAttributes = new { @class = "form-control edit danger" } })
+                        </td>
+                    </tr>
+
+                }
+            </table>
+            @Html.ActionLink("Add Stock", "NewVariant", new { id = Model.Stationary_ID }) <br /><br />
+
+            <br>
+
+            <input type="submit" value="Save" class="btn"  />
+
+
+
+            <div>
+                @Html.ActionLink("Back to listing", "Index")
+            </div>
+        </div>
+
+    }

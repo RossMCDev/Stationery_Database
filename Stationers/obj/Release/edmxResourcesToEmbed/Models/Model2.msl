@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCStationaryModelStoreContainer" CdmEntityContainer="MVCStationaryEntities1">
+    <EntitySetMapping Name="Stationaries">
+      <EntityTypeMapping TypeName="MVCStationaryModel.Stationary">
+        <MappingFragment StoreEntitySet="Stationary">
+          <ScalarProperty Name="Stationary_ID" ColumnName="Stationary_ID" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="ForSubject" ColumnName="ForSubject" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Favorite" ColumnName="Favorite" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Variants">
+      <EntityTypeMapping TypeName="MVCStationaryModel.Variant">
+        <MappingFragment StoreEntitySet="Variant">
+          <ScalarProperty Name="Variant_ID" ColumnName="Variant_ID" />
+          <ScalarProperty Name="Colour" ColumnName="Colour" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Stocked" ColumnName="Stocked" />
+          <ScalarProperty Name="Stationary_ID" ColumnName="Stationary_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

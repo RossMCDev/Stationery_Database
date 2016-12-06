@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCStationaryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Stationary">
+    <Key>
+      <PropertyRef Name="Stationary_ID" />
+    </Key>
+    <Property Name="Stationary_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Category" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Image" Type="varchar(max)" />
+    <Property Name="ForSubject" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Price" Type="money" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Favorite" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Variant">
+    <Key>
+      <PropertyRef Name="Variant_ID" />
+    </Key>
+    <Property Name="Variant_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Colour" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Status" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="Stocked" Type="bit" Nullable="false" />
+    <Property Name="Stationary_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Variant__Station__38996AB5">
+    <End Role="Stationary" Type="Self.Stationary" Multiplicity="1" />
+    <End Role="Variant" Type="Self.Variant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stationary">
+        <PropertyRef Name="Stationary_ID" />
+      </Principal>
+      <Dependent Role="Variant">
+        <PropertyRef Name="Stationary_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCStationaryModelStoreContainer">
+    <EntitySet Name="Stationary" EntityType="Self.Stationary" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Variant" EntityType="Self.Variant" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Variant__Station__38996AB5" Association="Self.FK__Variant__Station__38996AB5">
+      <End Role="Stationary" EntitySet="Stationary" />
+      <End Role="Variant" EntitySet="Variant" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

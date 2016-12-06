@@ -1,0 +1,131 @@
+﻿@model Stationers.Models.Stationary
+
+@{
+    ViewBag.Title = "Display";
+}
+
+<h2>Display</h2>
+
+<div>
+    <h4>Item</h4>
+    <hr />
+    <dt>
+        @Html.DisplayNameFor(model => model.Image)
+    </dt>
+    <dd>
+        <img src="http://localhost:55825/@Html.DisplayFor(model => model.Image)" alt="" class="picturedisplay" />
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Name)
+    </dt>
+    <dd>
+
+        @Html.DisplayFor(model => model.Name)
+
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Category)
+    </dt>
+    <dd>
+
+        @Html.DisplayFor(model => model.Category)
+
+    </dd>
+
+    <dt>
+        @Html.DisplayNameFor(model => model.Description)
+    </dt>
+    <dd>
+
+        @Html.DisplayFor(model => model.Description)
+
+    </dd>
+    
+
+    <dt>
+        Subject
+        </dt>
+    <dd>
+
+        @Html.DisplayFor(model => model.ForSubject)
+
+    </dd>
+
+
+        
+    <dt>
+        @Html.DisplayNameFor(model => model.Price)
+    </dt>
+        @if (Model.Price > 0)
+        {
+
+    <dd>
+
+        @Html.DisplayFor(model => model.Price)
+
+    </dd>
+        }
+        else if (Model.Price == 0)
+        { 
+    <dd>
+
+        Free
+    </dd>
+        }
+        else 
+        {
+            <dd>
+
+                Unknown
+            </dd>
+        }
+
+    @*@if (Model.Favorite)
+    {
+        <dd>
+
+            Favored
+
+        </dd>
+    }*@
+
+    <table class="table">
+
+        @foreach (var variant in Model.Variants.GroupBy(x => x.Colour))
+        {
+
+            <tr>
+                <td>
+                    <i class="fa fa-2x fa-square _@Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)" style="color: @Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)"></i>
+                    &nbsp;&nbsp;
+                    @Html.DisplayFor(modelItem => variant.FirstOrDefault().Colour)
+                </td>
+                <td>
+                    @if (variant.Any(x => x.Stocked == true))
+                    {
+                        <p>
+                            Stocked
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            Not Stocked
+                        </p>
+                    }
+                </td>
+            </tr>
+        }
+        </table>
+
+</div>
+
+
+
+<p>
+    @Html.ActionLink("Edit record", "Edit", new { id = Model.Stationary_ID })
+    @Html.ActionLink("Back to list", "Index")
+
+
+</p>
